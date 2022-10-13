@@ -1,33 +1,33 @@
 #!/usr/bin/python3
-"""Module that factorize as many numbers as possible
- into a product of two smaller numbers."""
-from sys import argv
+
+def prime_factors(num):
+    for n in range(1, int(num / 2) + 1):
+        status = True
+        if n < 2:
+            status = False
+        else:
+            for i in range(2, n):
+                if n % i == 0:
+                    status = False
+                    if status:
+                        if num % n == 0:
+                            second_factor = num // n
+                            if second_factor > n:
+                                print("{:d}={:d}*{:d}".format(num, second_factor, n))
+                            else:
+                                print("{:d}={:d}*{:d}".format(num, n, second_factor))
+                            break
 
 
-def factorize(value):
-    """"print a simple descomposition of an integer > 1"""
-    i = 2
 
-    if value < 2:
-        return
-    print()
-    print(value, "<- value-bef")
-    while value % i:
-        i += 1
-    print("{:.0f}={:.0f}*{:.0f}".format(value, value / i, i))
-    print(value, "<- value-aft")
-    print()
+def factors(file):
+    with open(file, "r") as files:
+        for i in files:
+            i = int(i.strip("\n"))
+            prime_factors(i)
 
-if len(argv) != 2:
-    exit()
 
-try:
-    with open(argv[1]) as file:
-        line = file.readline()
 
-        while line != "":
-            value = int(line.split('\n')[0])
-            factorize(value)
-            line = file.readline()
-except:
-    pass
+
+if __name__ == "__main__":
+    factors("file.txt")
